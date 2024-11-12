@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Star Wars Character</title>
+</head>
+<body>
+
+    <h1>Random Star Wars Character</h1>
+    
+    <button class="btn1">Get Random Character</button>
+
+    <div id="characterInfo"></div>
+    <img src="" class="character-img" alt="">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $(".btn1").on("click",function() {
+            const randomCharacterId = Math.ceil(Math.random() * 88)
+            const apiUrl = `https://rawcdn.githack.com/akabab/starwars-api/0.2.1/api/id/${randomCharacterId}.json`;
+            $.get(apiUrl, function(data) {
+                displayCharacterInfo(data)
+                $(".character-img").attr("src",data['image'])
+            })
+        })
+    })
+
+    function displayCharacterInfo(character) {
+            const characterInfoContainer = document.getElementById('characterInfo');
+            characterInfoContainer.innerHTML = `
+                <h2>${character.name}</h2>
+                <p><strong>Height:</strong> ${character.height} cm</p>
+                <p><strong>Mass:</strong> ${character.mass} kg</p>
+                <p><strong>Hair Color:</strong> ${character.hair_color}</p>
+                <p><strong>Eye Color:</strong> ${character.eye_color}</p>
+                
+            `;
+        }
+    </script>
+
+</body>
+</html>
